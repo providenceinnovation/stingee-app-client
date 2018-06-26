@@ -1,37 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CardHeader from '@material-ui/core/CardHeader';
+import Typography from '@material-ui/core/Typography';
 
 import Card from 'components/Card/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import PaymentTable from 'components/PaymentTable/PaymentTable'
 
-// TODO Cleanup key
-function renderListItems ({ cost, location, provider }) {
-  return (
-    <ListItem key={`${cost}_${location}_${provider}`} button divider>
-      {cost} {location} {provider}
-    </ListItem>
-  )
-}
-
-export default function PaymentCard({ title, children, subheader, paymentsData }) {
+export default function PaymentCard({ title, subheader, data }) {
   return (
     <Card>
-      <CardHeader title={title} subheader={subheader} />
-      <List disablePadding>
-        {paymentsData.map(renderListItems)}
-      </List>
+      <CardHeader title={(
+        <Typography variant="title">{title}</Typography>
+      )} />
+      <PaymentTable data={data} />
     </Card>
   );
 }
 
 PaymentCard.propTypes = {
-  children: PropTypes.node,
   title: PropTypes.string,
+  paymentsData: PropTypes.shape({}),
 };
 
 PaymentCard.defaultProps = {
-  children: undefined,
   title: '',
+  paymentsData: {},
 };

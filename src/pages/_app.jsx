@@ -1,6 +1,8 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import { Provider } from 'react-redux';
 
+import { initializeStore } from 'redux/store';
 import Layout from 'components/Layout/Layout';
 
 export default class NextApp extends App {
@@ -8,9 +10,11 @@ export default class NextApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={initializeStore()}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </Container>
     );
   }

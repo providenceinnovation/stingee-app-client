@@ -19,6 +19,7 @@ Stingee
            <meta name="theme-color" content={pageContext.theme.palette.primary.main} />
           <link rel="stylesheet" href="/_next/static/style.css" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,900&subset=latin" />
+          <script src="https://checkout.stripe.com/checkout.js" />
         </Head>
         <body>
           <Main />
