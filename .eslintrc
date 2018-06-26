@@ -1,0 +1,22 @@
+{
+  "extends": "airbnb",
+  "env": {
+  },
+  "globals": {
+    "document": false,
+    "window": false
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "eslint-comments",
+    "promise"
+  ],
+  "rules": {
+    "react/jsx-one-expression-per-line": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
+}
