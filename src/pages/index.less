@@ -2,8 +2,20 @@
 :root {
   body {
     font: 16px/1.4 'Source Sans Pro', sans-serif;
-    margin: 0; // Hacky workaround for server-side / client-side style switch
+    margin: 0; // TODO Fix hacky workaround for server-side / client-side style switch
   }
+
+  .material-icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+}
+
+.title {
+  display: inline-flex !important; // TODO Fix this craziness
+  align-items: center;
 }
 
 .content {
@@ -11,7 +23,7 @@
 }
 
 .paymentButton {
-  margin-top: 1rem;
+  margin-top: 1rem !important; // TODO important because next styles WON'T LEAVE ME ALONE
 }
 
 .paymentIcon {

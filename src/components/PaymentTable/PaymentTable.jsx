@@ -18,9 +18,11 @@ export default function PaymentTable ({ data = [] }) {
       </TableHead>
       <TableBody>
         {data.map(({ cost, provider, location, date }) => {
+          const costInDollars = (cost / 100).toFixed(2);
+
           return (
             <TableRow key={`${cost}_${provider}_${location}_${date}`}>
-              <TableCell component="th" scope="row">{cost}</TableCell>
+              <TableCell component="th" scope="row">{`$${costInDollars}`}</TableCell>
               <TableCell>{provider}</TableCell>
               <TableCell>{location}</TableCell>
               <TableCell>{date}</TableCell>

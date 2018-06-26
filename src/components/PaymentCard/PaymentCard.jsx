@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
 import Card from 'components/Card/Card';
 import PaymentTable from 'components/PaymentTable/PaymentTable'
+import styles from './PaymentCard.less';
 
 export default function PaymentCard({ title, subheader, data }) {
   return (
     <Card>
       <CardHeader title={(
-        <Typography variant="title">{title}</Typography>
+        <Fragment>
+          <Typography className={styles.title} variant="subheading">{title}</Typography>
+        </Fragment>
       )} />
       <PaymentTable data={data} />
     </Card>

@@ -22,17 +22,19 @@ export function fetchPayments () {
   return async (dispatch) => {
     dispatch(requestPayments());
 
-    // const url = 'https://jsonplaceholder.typicode.com/posts';
+    const USER_ID = 'a8hfg8agfgeg';
+    const url = `https://stingee-api-app.herokuapp.com/users/${USER_ID}/payments`;
 
     try {
-      // const data = await fetchAPI(url);
-      const data = [
-        { cost: '$471', provider: 'Dr. Dredd', location: 'Redmond, WA', date: '04/08/2018', status: 'paid' },
-        { cost: '$88', provider: 'Dr. Pain', location: 'Redmond, WA', date: '02/11/2018', status: 'paid' },
-        { cost: '$98', provider: 'Dr. Pain', location: 'Seattle, WA', date: '12/01/2017', status: 'paid' },
-        { cost: '$45.00', provider: 'Dr. Pain', location: 'Redmond Sprained Neck Doctor', date: '03/27/2018', status: 'unpaid' },
-        { cost: '$96.00', provider: 'Dr. Pain', location: 'Redmond Sprained Neck Doctor', date: '02/25/2018', status: 'unpaid' },
-      ];
+      const { data } = await fetchAPI(url) || {};
+      // const data = [
+      //   { cost: '$471', provider: 'Dr. Dredd', location: 'Redmond, WA', date: '04/08/2018', status: 'paid' },
+      //   { cost: '$88', provider: 'Dr. Pain', location: 'Redmond, WA', date: '02/11/2018', status: 'paid' },
+      //   { cost: '$98', provider: 'Dr. Pain', location: 'Seattle, WA', date: '12/01/2017', status: 'paid' },
+      //   { cost: '$45.00', provider: 'Dr. Pain', location: 'Redmond Sprained Neck Doctor', date: '03/27/2018', status: 'unpaid' },
+      //   { cost: '$96.00', provider: 'Dr. Pain', location: 'Redmond Sprained Neck Doctor', date: '02/25/2018', status: 'unpaid' },
+      // ];
+      console.log(data);
 
       dispatch(receivePayments(data));
 

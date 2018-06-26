@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PaymentIcon from '@material-ui/icons/Payment';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 
 import PaymentCard from 'components/PaymentCard/PaymentCard';
 import Header from 'components/Header/Header';
@@ -53,7 +54,7 @@ export default class Index extends Component {
         <div className={styles.content}>
           <Grid container spacing={16}>
             <Grid item xs={12}>
-              <Typography variant="headline">Bills</Typography>
+              <Typography className={styles.title} variant="headline"><ReceiptIcon color="disabled" />Bills</Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <PaymentCard title="Unpaid" data={unpaidPaymentsData} />
