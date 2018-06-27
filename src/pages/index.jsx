@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import PaymentIcon from '@material-ui/icons/Payment';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 
 import PaymentCard from 'components/PaymentCard/PaymentCard';
@@ -21,26 +19,6 @@ export default class Index extends Component {
     dispatch(fetchPayments());
   }
 
-  payAll = () => {
-    const amount = 2007;
-
-    const handler = StripeCheckout.configure({
-      key: 'pk_test_xrFmJlFSg2QpjiQKoR4Cx8y4',
-      image: '/static/stingee.png',
-      locale: 'auto',
-      token: ({ id: tokenId, ...rest } = {}) => {
-        console.log(rest);
-        dispatch(sendPayment({ tokenId, amount }));
-      }
-    });
-
-    handler.open({
-      name: 'Stingee',
-      description: 'Payment for selected unpaid bills:',
-      amount,
-    });
-  };
-
   render() {
     const { payments: { data: payments = [] } } = this.props;
 
@@ -52,19 +30,21 @@ export default class Index extends Component {
       <div className={styles.body}>
         <Header title="Stingee" />
         <div className={styles.content}>
-          <Grid container spacing={16}>
-            <Grid item xs={12}>
-              <Typography className={styles.title} variant="headline"><ReceiptIcon color="disabled" />Bills</Typography>
+          <Grid container spacing={16} direction="column">
+            <Grid item xs={12} align="center">
+              <Grid item xs={12} md={10} lg={8} xl={6} align="left">
+                <Typography className={styles.title} variant="headline"><ReceiptIcon color="disabled" />Bills</Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <PaymentCard title="Unpaid" data={unpaidPaymentsData} />
-              <Button icon="payment" variant="contained" color="primary" onClick={this.payAll} className={styles.paymentButton}>
-                Make Payment
-                <PaymentIcon className={styles.paymentIcon} />
-              </Button>
+            <Grid item xs={12} align="center">
+              <Grid item xs={12} md={10} lg={8} xl={6} align="left">
+                <PaymentCard title="Unpaid" data={unpaidPaymentsData} showPaymentButton />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <PaymentCard title="Paid" data={paidPaymentsData} />
+            <Grid item xs={12} align="center">
+              <Grid item xs={12} md={10} lg={8} xl={6} align="left">
+                <PaymentCard title="Paid" data={paidPaymentsData} />
+              </Grid>
             </Grid>
           </Grid>
         </div>

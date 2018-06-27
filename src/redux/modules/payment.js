@@ -22,7 +22,7 @@ export function sendPayment ({ tokenId }) {
   return async (dispatch) => {
     dispatch(requestPayment());
 
-    const url = 'http://172.29.131.40:8081/users/makePayment';
+    const url = 'https://stingee-api-app.herokuapp.com/users/makePayment';
 
     try {
       const data = await fetchAPI(url, {
