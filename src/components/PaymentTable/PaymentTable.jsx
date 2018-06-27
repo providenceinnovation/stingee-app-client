@@ -39,7 +39,7 @@ export default function PaymentTable ({ data = {}, onCheck, isSelectable }) {
             >
               {isSelectable && (
                 <TableCell padding="checkbox">
-                  <Checkbox checked={checked} />
+                  <Checkbox checked={!!checked} />
                 </TableCell>
               )}
               <TableCell component="th" scope="row">{`$${costInDollars}`}</TableCell>

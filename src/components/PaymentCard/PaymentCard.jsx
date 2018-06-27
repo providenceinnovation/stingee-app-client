@@ -9,6 +9,7 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import { sendPayment } from 'redux/modules/payment';
 import Card from 'components/Card/Card';
 import PaymentTable from 'components/PaymentTable/PaymentTable'
+import { receivePayments } from 'src/redux/modules/payments';
 import styles from './PaymentCard.less';
 
 // TODO Convert to selector
@@ -19,14 +20,9 @@ function getTotal(data = []) {
   }, 0)
 }
 
-@connect()
+@connect(({ payments }) => ({ payments }))
 export default class PaymentCard extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = { data: [] }
-  }
+  state = { data: [] };
 
   componentDidUpdate (prevProps) {
     const { data } = this.props;
@@ -36,7 +32,7 @@ export default class PaymentCard extends Component {
   }
 
   payAll = () => {
-    const { dispatch } = this.props;
+    const { dispatch, payments: { data: payments = [] } = {} } = this.props;
     const { data } = this.state;
     const amount = getTotal(data);
 
@@ -46,6 +42,17 @@ export default class PaymentCard extends Component {
       locale: 'auto',
       token: ({ id: tokenId } = {}) => {
         dispatch(sendPayment({ tokenId, amount }));
+
+        const paymentData = payments.map((item) => {
+          const paidPayment = data[item._id] || {};
+          return paidPayment.checked ? {
+            ...item,
+            checked: false,
+            status: 'paid'
+          } : item;
+        });
+
+        dispatch(receivePayments(paymentData));
       }
     });
 
@@ -69,9 +76,7 @@ export default class PaymentCard extends Component {
           checked: !existingItem.checked,
         },
       }
-    })
-
-    console.log(!existingItem.checked);
+    });
   }
 
   render() {
