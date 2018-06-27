@@ -11,6 +11,15 @@ import Header from 'components/Header/Header';
 import styles from './index.less';
 import './stripe.less';
 
+function transformPaymentData({ status: paymentStatus = '', data = [] }) {
+  return data
+    .filter(({ status }) => status === paymentStatus)
+    .reduce((items = {}, item) => {
+      items[item._id] = Object.assign({}, item);
+      return items;
+    }, {});
+}
+
 @connect(({ payments }) => ({ payments }))
 export default class Index extends Component {
   componentDidMount() {
@@ -22,8 +31,8 @@ export default class Index extends Component {
     const { payments: { data: payments = [] } } = this.props;
 
     // TODO Selector
-    const unpaidPaymentsData = payments.filter(({ status }) => status === 'unpaid');
-    const paidPaymentsData = payments.filter(({ status }) => status === 'paid');
+    const unpaidPaymentsData = transformPaymentData({ status: 'unpaid', data: payments });
+    const paidPaymentsData = transformPaymentData({ status: 'paid', data: payments });
 
     return (
       <div className={styles.body}>

@@ -11,13 +11,34 @@ import Card from 'components/Card/Card';
 import PaymentTable from 'components/PaymentTable/PaymentTable'
 import styles from './PaymentCard.less';
 
+// TODO Convert to selector
+function getTotal(data = []) {
+  return Object.keys(data).reduce((amount, key) => {
+    const { cost = 0, checked } = data[key] || {};
+    return amount + (checked ? +cost : 0);
+  }, 0)
+}
+
 @connect()
 export default class PaymentCard extends Component {
-  state = { amount: 14100 };
+
+  constructor(props) {
+    super(props);
+
+    this.state = { data: [] }
+  }
+
+  componentDidUpdate (prevProps) {
+    const { data } = this.props;
+    if (data !== prevProps.data) {
+      this.setState({ data });
+    }
+  }
 
   payAll = () => {
     const { dispatch } = this.props;
-    const { amount } = this.state;
+    const { data } = this.state;
+    const amount = getTotal(data);
 
     const handler = StripeCheckout.configure({
       key: 'pk_test_xrFmJlFSg2QpjiQKoR4Cx8y4',
@@ -35,16 +56,40 @@ export default class PaymentCard extends Component {
     });
   };
 
+  onCheck = ({ _id } = {}) => {
+    const { data } = this.state;
+
+    const existingItem = data[_id] || {};
+
+    this.setState({
+      data: {
+        ...data,
+        [_id]: {
+          ...existingItem,
+          checked: !existingItem.checked,
+        },
+      }
+    })
+
+    console.log(!existingItem.checked);
+  }
+
   render() {
-    const { title, data, showPaymentButton } = this.props;
-    const { amount } = this.state;
+    const { title, showPaymentButton } = this.props;
+    const { data } = this.state;
+
+    const amount = getTotal(data);
 
     return (
       <Card>
         <CardHeader title={(
           <Typography className={styles.title} variant="subheading">{title}</Typography>
-        )}/>
-        <PaymentTable data={data}/>
+        )} />
+        {(Object.keys(data).length > 0) ? (
+          <PaymentTable data={data} onCheck={this.onCheck} isSelectable={showPaymentButton} />
+        ) : (
+          <Typography className={styles.noPaymentsMessage} variant="title" color="textSecondary" align="center">You have no {title.toLowerCase()} payments.</Typography>
+        )}
         {showPaymentButton && (
           <div className={styles.totalWrapper}>
             <Typography variant="headline" className={styles.total}>Total ${(amount / 100).toFixed(2)}</Typography>
@@ -61,12 +106,12 @@ export default class PaymentCard extends Component {
 
 PaymentCard.propTypes = {
   title: PropTypes.string,
-  paymentsData: PropTypes.shape({}),
+  data: PropTypes.shape({}),
   showPaymentButton: PropTypes.bool,
 };
 
 PaymentCard.defaultProps = {
   title: '',
-  paymentsData: {},
+  data: {},
   showPaymentButton: false,
 };
