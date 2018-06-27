@@ -34,7 +34,6 @@ export function fetchPayments () {
       //   { cost: '$45.00', provider: 'Dr. Pain', location: 'Redmond Sprained Neck Doctor', date: '03/27/2018', status: 'unpaid' },
       //   { cost: '$96.00', provider: 'Dr. Pain', location: 'Redmond Sprained Neck Doctor', date: '02/25/2018', status: 'unpaid' },
       // ];
-      console.log(data);
 
       dispatch(receivePayments(data));
 

@@ -18,7 +18,7 @@ export default handleActions({
   ERROR_PAYMENT: createErrorReducer(),
 }, {});
 
-export function sendPayment ({ tokenId }) {
+export function sendPayment ({ tokenId, amount }) {
   return async (dispatch) => {
     dispatch(requestPayment());
 
@@ -28,7 +28,8 @@ export function sendPayment ({ tokenId }) {
       const data = await fetchAPI(url, {
         method: 'post',
         data: {
-          tokenId
+          tokenId,
+          amount
         }
       });
       dispatch(receivePayment(data));

@@ -5,10 +5,9 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 
+import { fetchPayments } from 'redux/modules/payments';
 import PaymentCard from 'components/PaymentCard/PaymentCard';
 import Header from 'components/Header/Header';
-import { fetchPayments } from 'redux/modules/payments';
-import { sendPayment } from 'redux/modules/payment';
 import styles from './index.less';
 import './stripe.less';
 

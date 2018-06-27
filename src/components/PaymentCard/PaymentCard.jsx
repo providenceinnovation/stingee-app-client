@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PaymentIcon from '@material-ui/icons/Payment';
 
+import { sendPayment } from 'redux/modules/payment';
 import Card from 'components/Card/Card';
 import PaymentTable from 'components/PaymentTable/PaymentTable'
 import styles from './PaymentCard.less';
 
-const amount = 14100;
-
+@connect()
 export default class PaymentCard extends Component {
+  state = { amount: 14100 };
+
   payAll = () => {
     const { dispatch } = this.props;
+    const { amount } = this.state;
 
     const handler = StripeCheckout.configure({
       key: 'pk_test_xrFmJlFSg2QpjiQKoR4Cx8y4',
       image: '/static/stingee.png',
       locale: 'auto',
-      token: ({ id: tokenId, ...rest } = {}) => {
-        console.log(rest);
+      token: ({ id: tokenId } = {}) => {
         dispatch(sendPayment({ tokenId, amount }));
       }
     });
@@ -34,6 +37,7 @@ export default class PaymentCard extends Component {
 
   render() {
     const { title, data, showPaymentButton } = this.props;
+    const { amount } = this.state;
 
     return (
       <Card>
