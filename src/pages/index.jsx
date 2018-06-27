@@ -38,7 +38,7 @@ export default class Index extends Component {
       <div className={styles.body}>
         <Header title="Stingee" />
         <div className={styles.content}>
-          <Grid container spacing={16} direction="column">
+          <Grid container spacing={16} noWrap>
             <Grid item xs={12} align="center">
               <Grid item xs={12} md={10} lg={8} xl={6} align="left">
                 <Typography className={styles.title} variant="headline"><ReceiptIcon color="disabled" />Bills</Typography>
