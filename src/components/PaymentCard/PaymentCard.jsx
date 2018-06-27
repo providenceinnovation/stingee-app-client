@@ -93,7 +93,7 @@ export default class PaymentCard extends Component {
         {showPaymentButton && (
           <div className={styles.totalWrapper}>
             <Typography variant="headline" className={styles.total}>Total ${(amount / 100).toFixed(2)}</Typography>
-            <Button icon="payment" variant="contained" color="primary" onClick={this.payAll} className={styles.paymentButton}>
+            <Button icon="payment" variant="contained" color="primary" onClick={this.payAll} className={styles.paymentButton} disabled={amount <= 0}>
               Make Payment
               <PaymentIcon className={styles.paymentIcon}/>
             </Button>
